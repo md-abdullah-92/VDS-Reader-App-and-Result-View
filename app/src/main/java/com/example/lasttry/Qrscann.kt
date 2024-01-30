@@ -10,11 +10,18 @@ import android.Manifest
 import android.content.Intent
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.ui.Modifier
 import com.budiyev.android.codescanner.AutoFocusMode
 import com.budiyev.android.codescanner.CodeScannerView
 import com.budiyev.android.codescanner.DecodeCallback
 import com.budiyev.android.codescanner.ErrorCallback
 import com.budiyev.android.codescanner.ScanMode
+import com.example.lasttry.ScannedResult.Companion.Scannedresult
+import com.example.lasttry.ui.theme.LasttryTheme
 
 class Qrscann : ComponentActivity() {
     private lateinit var codeScanner: CodeScanner
@@ -40,11 +47,21 @@ class Qrscann : ComponentActivity() {
         codeScanner.isFlashEnabled=true
         codeScanner.decodeCallback = DecodeCallback {
             runOnUiThread {
-               // val intent = Intent(this, NewPage::class.java).apply {
-                  //  putExtra("QR_RESULT", it.text)
-               // }
-               // startActivity(intent)
-               Toast.makeText(this, "Scan result: ${it.text}", Toast.LENGTH_LONG).show()
+                // val intent = Intent(this, NewPage::class.java).apply {
+                //  putExtra("QR_RESULT", it.text)
+                // }
+                // startActivity(intent)
+                setContent {
+                    LasttryTheme {
+                        // A surface container using the 'background' color from the theme
+                        Surface(
+                            modifier = Modifier.fillMaxSize(),
+                            color = MaterialTheme.colorScheme.background
+                        ) {
+                            Scannedresult(it.toString())
+                        }
+                    }
+                }
             }
         }
         codeScanner.errorCallback = ErrorCallback {
