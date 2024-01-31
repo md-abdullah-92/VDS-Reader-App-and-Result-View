@@ -118,23 +118,24 @@ class SemesterResultView {
                 item {
                     val sumOfCourseCredit = results?.filter { it.GPA != 0.0 }?.sumByDouble { it.course_credit.toDouble() }
                     val sumOfWeightedCredits = results?.filter { it.GPA != 0.0 }?.sumByDouble { it.course_credit.toDouble() * it.GPA }
-                    var Gpa: Double? = null
+                    var formattedGpa: Double? = null
 
                     if (sumOfCourseCredit != null && sumOfWeightedCredits != null && sumOfCourseCredit != 0.0) {
-                        Gpa = sumOfWeightedCredits / sumOfCourseCredit
+                        formattedGpa = sumOfWeightedCredits / sumOfCourseCredit
                     }
 
-                    val Grade = Gpa?.let { getLetterGrade(gpa = it) } ?: ""
+                    val Gpa = formattedGpa?.let { String.format("%.2f", it) } ?: ""
+                    val Grade = formattedGpa?.let { getLetterGrade(gpa = it) } ?: ""
 
                     TableRow(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(MaterialTheme.colorScheme.primary)
+                            .background(MaterialTheme.colorScheme.secondaryContainer)
                             .fillMaxSize()
                     ) {
-                        TableCell(text = "Total", weight = 0.475f, alignment = TextAlign.Left, title = false)
+                        TableCell(text = "Total", weight = 0.49f, alignment = TextAlign.Center, title = false)
                         TableCell(text = sumOfCourseCredit?.toString() ?: "", weight = 0.185f, alignment = TextAlign.Left, title = false)
-                        TableCell(text = "GPA: "+(Gpa?.toString() ?: ""), weight = 0.185f, alignment = TextAlign.Left, title = false)
+                        TableCell(text = "GPA: "+(Gpa.toString() ?: ""), weight = 0.185f, alignment = TextAlign.Left, title = false)
                         TableCell(text = Grade, weight = 0.185f, alignment = TextAlign.Left, title = false)
                     }
                 }

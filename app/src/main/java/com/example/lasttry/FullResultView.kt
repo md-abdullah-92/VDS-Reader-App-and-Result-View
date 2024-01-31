@@ -69,7 +69,8 @@ class FullResultView {
                 item {
                     GetPersonInfo(
                         name = MainActivity.studentInfo?.name ?: "",
-                        regName = (MainActivity.studentInfo?.reg_no.toString() )?: "", // Corrected typo
+                        regName = (MainActivity.studentInfo?.reg_no.toString())
+                            ?: "", // Corrected typo
                         dept = MainActivity.studentInfo?.dept.toString() ?: "",
                         session = MainActivity.studentInfo?.session ?: "",
                     )
@@ -96,6 +97,9 @@ class FullResultView {
                 }
                 item {
                     Sum(results, "1st")
+                }
+                item {
+                    CumilitiveSum(results,  1)
                     Spacer(modifier = Modifier.height(32.dp))
                 }
 
@@ -122,6 +126,9 @@ class FullResultView {
                 }
                 item {
                     Sum(results, "2nd")
+                    CumilitiveSum(results,  2)
+                }
+                item {
                     Spacer(modifier = Modifier.height(32.dp))
                 }
 
@@ -147,6 +154,9 @@ class FullResultView {
                 }
                 item {
                     Sum(results, "3rd")
+                }
+                item {
+                    CumilitiveSum(results,  3)
                     Spacer(modifier = Modifier.height(32.dp))
                 }
 
@@ -172,6 +182,9 @@ class FullResultView {
                 }
                 item {
                     Sum(results, "4th")
+                }
+                item{
+                    CumilitiveSum(results,  4)
                     Spacer(modifier = Modifier.height(32.dp))
                 }
 
@@ -198,6 +211,9 @@ class FullResultView {
                 }
                 item {
                     Sum(results, "5th")
+                }
+                item{
+                    CumilitiveSum(results,  5)
                     Spacer(modifier = Modifier.height(32.dp))
                 }
 
@@ -223,6 +239,9 @@ class FullResultView {
                 }
                 item {
                     Sum(results, "6th")
+                }
+                item {
+                    CumilitiveSum(results,  6)
                     Spacer(modifier = Modifier.height(32.dp))
                 }
 
@@ -248,6 +267,9 @@ class FullResultView {
                 }
                 item {
                     Sum(results, "7th")
+                }
+                item{
+                    CumilitiveSum(results,  7)
                     Spacer(modifier = Modifier.height(32.dp))
                 }
 
@@ -273,11 +295,15 @@ class FullResultView {
                 }
                 item {
                     Sum(results, "8th")
+                }
+                item{
+                    CumilitiveSum(results,  8)
                     Spacer(modifier = Modifier.height(32.dp))
                 }
             }
 
         }
+
 
         private @Composable
         fun Sum(results: List<Getdata>?, s: String) {
@@ -320,10 +346,10 @@ class FullResultView {
                     .fillMaxSize()
             ) {
                 TableCell(
-                    text = "Total",
+                    text = "Total For this Semester",
                     weight = 0.49f,
-                    alignment = TextAlign.Left,
-                    title = false
+                    alignment = TextAlign.Justify,
+                    title = true
                 )
                 TableCell(
                     text = sumOfCourseCredit?.toString() ?: "",
@@ -347,5 +373,138 @@ class FullResultView {
 
         }
 
+
+        private @Composable
+        fun CumilitiveSum(results: List<Getdata>?, number: Int) {
+
+            fun getLetterGrade(gpa: Double): String {
+                return when {
+                    gpa >= 4.0 -> "A+"
+                    gpa >= 3.75 -> "A"
+                    gpa >= 3.5 -> "A-"
+                    gpa >= 3.25 -> "B+"
+                    gpa >= 3.0 -> "B"
+                    gpa >= 2.75 -> "B-"
+                    gpa >= 2.5 -> "C+"
+                    gpa >= 2.25 -> "C"
+                    gpa >= 2.00 -> "C-"
+                    else -> "F"
+                }
+            }
+
+            val getGPA: List<Double> = cumulativeSum(results)
+            val getCredit: List<Double> = cumlativeCredit(results)
+            val  sumOfWeightedCredits = getGPA.getOrNull(number - 1) ?: 0.0
+            val sumOfCourseCredit = getCredit.getOrNull(number - 1) ?: 0.0
+
+            var formattedGpa: Double? = null
+
+            if (sumOfCourseCredit != 0.0) {
+                formattedGpa = sumOfWeightedCredits / sumOfCourseCredit
+            }
+
+            val Gpa = formattedGpa?.let { String.format("%.2f", it) } ?: ""
+            val Grade = formattedGpa?.let { getLetterGrade(gpa = it) } ?: ""
+
+
+            TableRow(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.secondaryContainer)
+                    .fillMaxSize()
+            ) {
+                TableCell(
+                    text = "Total",
+                    weight = 0.49f,
+                    alignment = TextAlign.Justify,
+                    title = true
+                )
+                TableCell(
+                    text = sumOfCourseCredit?.toString() ?: "",
+                    weight = 0.185f,
+                    alignment = TextAlign.Left,
+                    title = false
+                )
+                TableCell(
+                    text = "GPA: " + Gpa,
+                    weight = 0.185f,
+                    alignment = TextAlign.Left,
+                    title = false
+                )
+                TableCell(
+                    text = Grade,
+                    weight = 0.185f,
+                    alignment = TextAlign.Left,
+                    title = false
+                )
+            }
+
+        }
+
+        fun cumulativeSum(results: List<Getdata>?): List<Double> {
+            val cumulativeResult = mutableListOf<Double>()
+            var sum = 0.0 // Type of 'sum' is already Double
+
+            for (semester in 1..8) {
+                val semesterString = "$semester${getOrdinalSuffix(semester)}"
+                sum += getSemesterWiseResult(results, semesterString)
+                cumulativeResult.add(sum)
+            }
+
+            return cumulativeResult
+        }
+
+        private fun cumlativeCredit(results: List<Getdata>?): List<Double> {
+            val cumulativeCredit = mutableListOf<Double>()
+            var sum = 0.0
+
+            for (semester in 1..8) {
+                val semesterString = "$semester${getOrdinalSuffix(semester)}"
+                sum += getSemesterCreditsum(results, semesterString)
+                cumulativeCredit.add(sum)
+            }
+
+            return cumulativeCredit
+        }
+
+
+        private fun getOrdinalSuffix(number: Int): String {
+            val suffixes = listOf("", "st", "nd", "rd") + List(7) { "th" }
+            return suffixes[number]
+        }
+
+        private fun getSemesterWiseResult(results: List<Getdata>?, semester: String): Double {
+            var sum = 0.0
+
+            results?.forEach { getData ->
+                if (getData.semester == semester) {
+                    val credit = getData.course_credit ?: 0.0
+                    val gpa = getData.GPA ?: 0.0
+                    sum += (credit.toDouble()) * gpa
+                }
+            }
+
+            return sum
+        }
+
+
+        private fun getSemesterCreditsum(results: List<Getdata>?, semester: String): Double {
+            var sum = 0.0
+
+            results?.forEach { getData ->
+                val credit = getData.course_credit ?: 0.0
+                val gpa = getData.GPA ?: 0.0
+                if (getData.semester == semester && gpa != 0.0) {
+                    sum += (credit.toDouble())
+                }
+            }
+
+            return sum
+        }
+
+
     }
 }
+
+
+
