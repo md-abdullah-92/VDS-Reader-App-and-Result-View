@@ -1,6 +1,7 @@
 package com.example.lasttry
 
 data class  Getdata (
+    // Represents a data object containing information about a student's course.
     val reg_no: Int,
     val GPA:Double,
     val Grade: String,
@@ -10,6 +11,7 @@ data class  Getdata (
     val course_credit: Float
 )
 data class StudentInfo(
+    // Represents a data object containing information about a student.
     val name : String,
     val reg_no: Int,
     val date_of_birth :String,

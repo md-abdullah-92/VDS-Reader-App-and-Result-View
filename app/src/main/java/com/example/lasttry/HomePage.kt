@@ -45,8 +45,11 @@ class HomePage {
     companion object{
         @Composable
         fun Homepage(navController: NavController) {
+            // Composable function to display the main UI of the home page
+            // Function to handle the home page UI layout
             val context = LocalContext.current
             Spacer(modifier = Modifier.height(35.dp))
+            // Box with a linear gradient background
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -63,6 +66,7 @@ class HomePage {
                         )
                     )
             ) {
+                // Column to arrange UI elements vertically
                 Column(
 
                     modifier = Modifier.fillMaxSize(),
@@ -70,6 +74,7 @@ class HomePage {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Spacer(modifier = Modifier.height(100.dp))
+                    // Box containing a clickable Card with an Image (Qr Code Scanner)
                     Box(
                         contentAlignment = Alignment.Center,
                         modifier = Modifier
@@ -104,9 +109,10 @@ class HomePage {
                             )
                         }
                     }
-                    Spacer(modifier = Modifier.height(16.dp)) // Add some space between Image and Textrow
-                    Textrow("Scan Qr Code") // Include the Textrow here
+                    Spacer(modifier = Modifier.height(16.dp)) // Spacer between Image and Textrow
+                    Textrow("Scan Qr Code") // Textrow to display text
                     Spacer(modifier = Modifier.height(32.dp))
+                    // Image (Certificate) with navigation to "submit" destination on click
                     Image(
                         painter = painterResource(id = R.drawable.certificate),
                         contentDescription = "",
@@ -119,12 +125,14 @@ class HomePage {
                             }
                     )
                     Spacer(modifier = Modifier.height(16.dp))
-
+                    // Textrow for "Check Results"
                     Textrow("Check Results")
 
                 }
             }
         }
+
+        // Composable function to display a row of text
         @Composable
         fun Textrow(text:String){
             Row(

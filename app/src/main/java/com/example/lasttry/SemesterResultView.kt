@@ -85,6 +85,7 @@ class SemesterResultView {
                     GetPersonInfo(
                         name = MainActivity.studentInfo?.name ?: "",
                         regName = MainActivity.studentInfo?.reg_no.toString() ?: "", // Corrected typo
+                        dept = MainActivity.studentInfo?.dept.toString()?:"",
                         session = MainActivity.studentInfo?.session ?: "",
                     )
                 }
@@ -254,14 +255,15 @@ class SemesterResultView {
          * @param session Session information.
          */
         @Composable
-        fun GetPersonInfo(name: String, regName: String, session: String) {
-            row(string = "Name of Student :$name")
-            row(string = "Registration No :$regName")
-            row("Session :$session")
+        fun GetPersonInfo(name: String, regName: String, session: String,dept:String) {
+            Personalinfo(string = "Name of Student :$name")
+            Personalinfo(string = "Registration No :$regName")
+            Personalinfo(string = "Depertment :$dept")
+            Personalinfo("Session :$session")
 
         }
         @Composable
-        fun row(string: String){
+        fun  Personalinfo(string: String){
             Text(
                 text = string,
                 fontSize = 12.sp,
