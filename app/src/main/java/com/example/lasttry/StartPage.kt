@@ -76,7 +76,7 @@ class StartPage {
                 }
             }
             LaunchedEffect(Unit) {
-                delay(8000) // Simulating a 2-second delay
+                delay(3000) // Simulating a 2-second delay
                 navController.navigate("homepage")
             }
 

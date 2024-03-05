@@ -1,8 +1,12 @@
 package com.example.lasttry
 
+import android.content.ContentValues.TAG
+import android.content.Context
 import java.security.PrivateKey
 import javax.crypto.Cipher
 import android.util.Base64;
+import android.util.Log
+import android.widget.Toast
 import java.security.PublicKey
 
 
@@ -19,7 +23,7 @@ class SecurityPage {
             }
             return null
         }
-        fun differentiate(data: String): Map<String, Any> {
+        fun differentiate(data: String,toastContext:Context): Map<String, Any> {
             fun parseInfo(data: String): Map<String, String> {
                 val lines = data.trim().lines()
                 val parsedData = mutableMapOf<String, String>()
@@ -28,7 +32,8 @@ class SecurityPage {
                     if (parts.size == 2) {
                         parsedData[parts[0]] = parts[1]
                     } else {
-                        println("Invalid line format: $line")
+                        Toast.makeText(toastContext,"Invalid line format", Toast.LENGTH_LONG).show()
+                        return parsedData
                     }
                 }
                 return parsedData
@@ -49,7 +54,7 @@ class SecurityPage {
                                 val info = parseInfo(infoLines.joinToString("\n"))
                                 result["Info"] = info
                             } else {
-                                println("Unknown section type: $sectionType")
+                                Toast.makeText(toastContext,"Unknown section type", Toast.LENGTH_LONG).show()
                             }
                         }
                     }
