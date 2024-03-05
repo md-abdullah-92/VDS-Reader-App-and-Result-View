@@ -21,9 +21,13 @@ import com.budiyev.android.codescanner.DecodeCallback
 import com.budiyev.android.codescanner.ErrorCallback
 import com.budiyev.android.codescanner.ScanMode
 import com.example.lasttry.ScannedResult.Companion.Scannedresult
+import com.example.lasttry.SecurityPage.Companion.decrypt
 import com.example.lasttry.SecurityPage.Companion.differentiate
 import com.example.lasttry.ui.theme.LasttryTheme
+import java.security.KeyFactory
 import java.security.MessageDigest
+import java.security.spec.X509EncodedKeySpec
+import java.util.Base64
 
 class Qrscann : ComponentActivity() {
     private lateinit var codeScanner: CodeScanner
@@ -84,7 +88,18 @@ class Qrscann : ComponentActivity() {
                             val digest: MessageDigest = MessageDigest.getInstance("SHA-256")
                             val hash: ByteArray = digest.digest(s.toByteArray())
                             val hexString = hash.joinToString("") { "%02x".format(it) }
-                            Scannedresult(PublicKey.toString()+"\n"+HashValue.toString()+"\n"+hexString+s+result.toString())
+                            val publicKeyBytes = Base64.getDecoder().decode(PublicKey.toString())
+                            val publicKeySpec = X509EncodedKeySpec(publicKeyBytes)
+                            val publicKey = KeyFactory.getInstance("RSA").generatePublic(publicKeySpec)
+                            // Assuming "it" represents the encrypted data
+                            var decryptedData = decrypt(HashValue.toString(), publicKey)
+                            if(hexString==decryptedData.toString()){
+                                Scannedresult(s);
+                            }
+                            else {
+                                Scannedresult("FAIDED")
+                            }
+                          //  Scannedresult(hexString+"\n"+decryptedData.toString())
                            // Scannedresult(result.toString());
                         }
                     }

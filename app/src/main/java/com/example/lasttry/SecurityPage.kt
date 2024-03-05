@@ -8,6 +8,17 @@ import java.security.PublicKey
 
 class SecurityPage {
     companion object {
+        fun decrypt(encryptedText: String, publicKey: PublicKey): String? {
+            try {
+                val cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding")
+                cipher.init(Cipher.DECRYPT_MODE, publicKey)
+                val decryptedBytes = cipher.doFinal(Base64.decode(encryptedText, Base64.DEFAULT))
+                return String(decryptedBytes)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            return null
+        }
         fun differentiate(data: String): Map<String, Any> {
             fun parseInfo(data: String): Map<String, String> {
                 val lines = data.trim().lines()
