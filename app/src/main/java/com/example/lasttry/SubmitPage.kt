@@ -104,17 +104,18 @@ class SubmitPage {
                             .padding(bottom = 10.dp, start = 10.dp, end = 10.dp),
                         shape = RoundedCornerShape(15.dp),
                         colors = TextFieldDefaults.colors(),
-                        keyboardOptions = KeyboardOptions(
+                       /* keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Number,
                             imeAction = ImeAction.Done,
                             capitalization = KeyboardCapitalization.None
-                        )
+                        ),*/
+                       // keyboardOpotion=
 
                     )
                     Button(
                         onClick = {
                             if(regNo.value.text.isNotEmpty() and dateofbirth.value.text.isNotEmpty()){
-                            val BASE_URL = "http://192.168.195.116:5001/"
+                            val BASE_URL = "http://10.200.194.59:5001/"
                             val apiService: ApiService by lazy {
                                 Retrofit.Builder()
                                     .baseUrl(BASE_URL)

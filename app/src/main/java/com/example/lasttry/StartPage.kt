@@ -43,7 +43,7 @@ class StartPage {
                 modifier = Modifier
                     .fillMaxSize()
                     .background(
-                       // shape = RoundedCornerShape(20.dp),
+                        // shape = RoundedCornerShape(20.dp),
                         brush = Brush.linearGradient(
                             colors = listOf(
                                 Color(0xFF00FFFF),
@@ -70,12 +70,13 @@ class StartPage {
                     )
                     Textrow("Welcome")
                     Textrow("To")
-                    Textrow("Visible Seal Reader")
+                    Textrow("Visible Digital Seal")
+                    Textrow("Reader")
 
                 }
             }
             LaunchedEffect(Unit) {
-                delay(2000) // Simulating a 2-second delay
+                delay(8000) // Simulating a 2-second delay
                 navController.navigate("homepage")
             }
 
