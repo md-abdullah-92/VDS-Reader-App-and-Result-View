@@ -22,15 +22,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 
-class SuccessVerification {
+class FailedVerification {
     companion object {
         @Composable
-        fun SuccessfulVerification(navController: NavController,string: String){
-            Spacer(modifier = Modifier.height(100.dp))
-            // Box with a linear gradient background
+        fun Failedvarification() {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -46,7 +43,8 @@ class SuccessVerification {
                             tileMode = TileMode.Decal
                         )
                     )
-            ) {
+            )
+            {
 
                 Column(
 
@@ -68,9 +66,9 @@ class SuccessVerification {
                             // border = BorderStroke(3.dp, Color.White),
                             modifier = Modifier
                                 .size(400.dp)
-                        ){
+                        ) {
                             Image(
-                                painter = painterResource(id = R.drawable.success),
+                                painter = painterResource(id = R.drawable.failed),
                                 contentDescription = "Card",
                                 modifier = Modifier
                                     .size(400.dp)
@@ -79,18 +77,12 @@ class SuccessVerification {
                         }
                     }
                     Spacer(modifier = Modifier.height(16.dp))
-                    HomePage.Textrow("Successfully verified.")
+                    HomePage.Textrow("Failed.")
                     Spacer(modifier = Modifier.height(32.dp))
                     Spacer(modifier = Modifier.height(16.dp))
-                    LaunchedEffect(Unit) {
-                        delay(3000)
-                        navController.navigate("startpage")
-                    }
+
                 }
             }
-
         }
     }
-
 }
-

@@ -24,6 +24,7 @@ import com.budiyev.android.codescanner.CodeScannerView
 import com.budiyev.android.codescanner.DecodeCallback
 import com.budiyev.android.codescanner.ErrorCallback
 import com.budiyev.android.codescanner.ScanMode
+import com.example.lasttry.FailedVerification.Companion.Failedvarification
 import com.example.lasttry.ScannedResult.Companion.Scannedresult
 import com.example.lasttry.SecurityPage.Companion.decrypt
 import com.example.lasttry.SecurityPage.Companion.differentiate
@@ -100,7 +101,7 @@ class Qrscann : ComponentActivity() {
                                 ) {
                                     // Composable for the start page
                                     composable("startpage") {
-                                        Scannedresult(navController, s)
+                                        Scannedresult(s)
                                     }
                                     // Composable for the home page
                                     composable("homepage") {
@@ -109,7 +110,7 @@ class Qrscann : ComponentActivity() {
                                 }
                                     //
                             if(info==null||PublicKey==null||s==null){
-                                Scannedresult(navController,"Please Try Again")
+                                Failedvarification();
                             }
                             val digest: MessageDigest = MessageDigest.getInstance("SHA-256")
                             val hash: ByteArray = digest.digest(s.toByteArray())
@@ -120,11 +121,10 @@ class Qrscann : ComponentActivity() {
                             // Assuming "it" represents the encrypted data
                             var decryptedData = decrypt(HashValue.toString(), publicKey)
                             if(hexString==decryptedData.toString()){
-                                //Scannedresult(s);
                                 navController.navigate("homepage")
                             }
                             else {
-                                Scannedresult(navController,"FAIDED")
+                                Failedvarification();
                             }
                           //  Scannedresult(hexString+"\n"+decryptedData.toString())
                            // Scannedresult(result.toString());

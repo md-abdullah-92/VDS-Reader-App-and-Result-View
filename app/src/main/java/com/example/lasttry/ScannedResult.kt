@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -34,24 +33,17 @@ import androidx.navigation.NavController
 class ScannedResult {
     companion object {
         @Composable
-        fun Scannedresult(navController: NavController, string: String) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(
-                        //shape = RoundedCornerShape(20.dp),
-                        brush = Brush.linearGradient(
-                            colors = listOf(
+        fun Scannedresult(string: String) {
+            Box(modifier = Modifier.fillMaxWidth()) {
+                Image(
+                    painter = painterResource(id = R.drawable.sustlogo),
+                    contentDescription = "",
+                    contentScale = ContentScale.FillBounds,
+                    modifier = Modifier.matchParentSize(),
+                    alpha = .1f
+                )
 
-                                Color(0xFFFFFFFF),
-                                Color(0xFFFFFFFF)
-                            ),
-                            start = Offset.Zero,
-                            end = Offset.Infinite,
-                            tileMode = TileMode.Decal
-                        )
-                    )
-            )
+            }
             LazyColumn {
                 item {
                     //Spacer(modifier = Modifier.height(200.dp))
@@ -67,28 +59,28 @@ class ScannedResult {
                     Spacer(modifier = Modifier.height(40.dp))
                 }
                 item {
-                   // Spacer(modifier = Modifier.height(50.dp))
+                    Text(
+                        text = "SHAHJALAL UNIVERSITY OF SCIENCE & TECHNOLOGY, SYLHET, BANGLADESH",
+                        fontSize = 18.sp,
+                        textAlign = TextAlign.Center,
+                        color = Color(0xFF123DB4),
+                        fontWeight = FontWeight.SemiBold
+                    )
+                }
+                item {
 
-                    Card(
-
-                        shape = RoundedCornerShape(15.dp),
-                        elevation = CardDefaults.cardElevation(20.dp),
-                         border = BorderStroke(3.dp, Color.Blue),
-                        modifier = Modifier
-                            .size(350.dp),
-                    ){
                         Spacer(modifier = Modifier.height(50.dp))
                         Text(
                             text = string,
-                            fontSize = 15.sp,
-                          //  fontWeight = FontWeight.SemiBold,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.SemiBold,
                             textAlign = TextAlign.Center,
                             color= Color.Black,
                             modifier = Modifier
                                 .fillMaxSize()
                         )
 
-                    }
+
                 }
 
             }

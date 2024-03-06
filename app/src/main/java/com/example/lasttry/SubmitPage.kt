@@ -115,7 +115,7 @@ class SubmitPage {
                     Button(
                         onClick = {
                             if(regNo.value.text.isNotEmpty() and dateofbirth.value.text.isNotEmpty()){
-                            val BASE_URL = "http://10.200.194.59:5001/"
+                            val BASE_URL = "http://192.168.27.116:5001/"
                             val apiService: ApiService by lazy {
                                 Retrofit.Builder()
                                     .baseUrl(BASE_URL)

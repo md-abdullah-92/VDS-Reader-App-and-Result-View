@@ -40,7 +40,7 @@ class Resultpage {
         @Composable
         fun ResultPage(navController: NavController) {
             val toastContext = LocalContext.current
-            val BASE_URL = "http://10.200.194.59:5001/"
+            val BASE_URL = "http://192.168.27.116:5001/"
             val apiService: ApiService by lazy {
                 Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -166,7 +166,7 @@ class Resultpage {
 
         @Composable
         fun DropDownBox(navController: NavController) {
-            val BASE_URL = "http://10.200.194.59:5001/"
+            val BASE_URL = "http://192.168.27.116:5001/"
             val apiService: ApiService by lazy {
                 Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -233,7 +233,7 @@ private fun getResultsForSemester(
     regNo: String,
     semester: Int
 ) {
-    val BASE_URL = "http://10.200.194.59:5001/"
+    val BASE_URL = "http://192.168.27.116:5001/"
     val apiService: ApiService by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
