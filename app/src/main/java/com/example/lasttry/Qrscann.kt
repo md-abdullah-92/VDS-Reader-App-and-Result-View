@@ -73,10 +73,15 @@ class Qrscann : ComponentActivity() {
                             modifier = Modifier.fillMaxSize(),
                             color = MaterialTheme.colorScheme.background
                         ) {
-
-                           val result: Map<String, Any> =differentiate(it.toString(),toastContext)
+                            val PK="MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAsSm7tserI8awN0nItgpHsRcnZ9JXxfcmfJzumsEKxDwlqqiirK475c52I1St8uVfX3Vo8Z276Q/4qH+bGQkVyMrvxoCzGVFq3aOq42HPntLmg3IGFGZMaK4CEsiuty07MUUwMVtyKQSTGm0wqyFfz/FEn7S1eXYJ1EnF7J+QYKEPCqaet9PVW8wLqKSJCdynR+0Pd58FIED1/K0DwG3sjLWZ0U78LBXR1iz2rBhD4jlMb7Exrgvw3eGXnqIJWDunConsMD160YqU6ZzsIrDDmAoWj5dgiHd85ArDJtbtk540Q5aOI/zyUPNB9nnwllgcVGx3A6MRmKZUWLAFiuy3HzzOMjKmc21u9O5o+XpWyBVauGtJPk6haFzDSBHHJT2VSqN2jtq4wvAv/TGTo5Cj5aG1eHRghZySxRUYzSgIQSiJ2DrHwE6GNidjGfoXHnlX3UInLRA+8G/4hr4wRO8uw46CC1u1vc1TwzkOl6T47ocYADwZY8BBdvoRFMoH+NjAQxjwYVzh6nYUJE4r261OfY0gvmXbPINswBFIfLGDqcqXNYOMXA8Haqjwum6vujAeAoxDvOG3ohqaur5jyFZOT6rn9B636Kuz6v0gFnHaUYNTvyYJELhTl36VmbHmjtMCs+eXiVurCfggIW5PLP4S8kmNNMQnRPtjg1Gy06JdRtsCAwEAAQ=="
+                            val publicKeyBytes = Base64.getDecoder().decode(PK.toString())
+                            val publicKeySpec = X509EncodedKeySpec(publicKeyBytes)
+                            val publicKey = KeyFactory.getInstance("RSA").generatePublic(publicKeySpec)
+                            // Assuming "it" represents the encrypted data
+                            var decryptedData = decrypt(it.toString(), publicKey)
+                           val result: Map<String, Any> =differentiate(decryptedData.toString(),toastContext)
                             val info = result["Info"]
-                            val PublicKey=result["PublicKey"]
+                           // val PublicKey=result["PublicKey"]
                             val HashValue=result["HashValue"]
                             var s ="";
                             if (result["Info"] is Map<*, *>) {
@@ -109,18 +114,18 @@ class Qrscann : ComponentActivity() {
                                     }
                                 }
                                     //
-                            if(info==null||PublicKey==null||s==null){
+                            if(info==null||s==null||HashValue==null){
                                 Failedvarification();
                             }
                             val digest: MessageDigest = MessageDigest.getInstance("SHA-256")
                             val hash: ByteArray = digest.digest(s.toByteArray())
                             val hexString = hash.joinToString("") { "%02x".format(it) }
-                            val publicKeyBytes = Base64.getDecoder().decode(PublicKey.toString())
-                            val publicKeySpec = X509EncodedKeySpec(publicKeyBytes)
-                            val publicKey = KeyFactory.getInstance("RSA").generatePublic(publicKeySpec)
-                            // Assuming "it" represents the encrypted data
-                            var decryptedData = decrypt(HashValue.toString(), publicKey)
-                            if(hexString==decryptedData.toString()){
+//                            val publicKeyBytes = Base64.getDecoder().decode(PublicKey.toString())
+//                            val publicKeySpec = X509EncodedKeySpec(publicKeyBytes)
+//                            val publicKey = KeyFactory.getInstance("RSA").generatePublic(publicKeySpec)
+//                            // Assuming "it" represents the encrypted data
+//                            var decryptedData = decrypt(HashValue.toString(), publicKey)
+                            if(hexString==HashValue.toString()){
                                 navController.navigate("homepage")
                             }
                             else {

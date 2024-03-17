@@ -24,6 +24,7 @@ interface ApiService {
         @Query("reg_no") regNo: Int
     ): Call<List<Getdata>>
 
+
     @GET("StudentFullResults")
     // Retrieves full results for a student based on registration number.
     fun getStudentFullResults(@Query("reg_no") regNo: Int): Call<List<Getdata>>
