@@ -81,7 +81,7 @@ class Qrscann : ComponentActivity() {
                             var decryptedData = decrypt(it.toString(), publicKey)
                            val result: Map<String, Any> =differentiate(decryptedData.toString(),toastContext)
                             val info = result["Info"]
-                           // val PublicKey=result["PublicKey"]
+                            val PublicKey=result["PublicKey"]
                             val HashValue=result["HashValue"]
                             var s ="";
                             if (result["Info"] is Map<*, *>) {
@@ -98,7 +98,7 @@ class Qrscann : ComponentActivity() {
 
                                 }
                             }
-                                val navController = rememberNavController()
+                               /* val navController = rememberNavController()
                                 // Setting up navigation host with start destination
                                 NavHost(
                                     navController = navController,
@@ -113,7 +113,7 @@ class Qrscann : ComponentActivity() {
                                         SuccessfulVerification(navController,s)
                                     }
                                 }
-                                    //
+*/ //
                             if(info==null||s==null||HashValue==null){
                                 Failedvarification();
                             }
@@ -126,7 +126,9 @@ class Qrscann : ComponentActivity() {
 //                            // Assuming "it" represents the encrypted data
 //                            var decryptedData = decrypt(HashValue.toString(), publicKey)
                             if(hexString==HashValue.toString()){
-                                navController.navigate("homepage")
+                              //  navController.navigate("homepage")
+                                Toast.makeText(toastContext,"Successfully  Verified", Toast.LENGTH_LONG).show()
+                                Scannedresult(s)
                             }
                             else {
                                 Failedvarification();

@@ -71,7 +71,7 @@ class StartPage {
                     Textrow("Welcome")
                     Textrow("To")
                     Textrow("Visible Digital Seal")
-                    Textrow("Reader")
+                    Textrow("Read & Create")
 
                 }
             }

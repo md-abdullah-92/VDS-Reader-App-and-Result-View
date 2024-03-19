@@ -48,7 +48,7 @@ class HomePage {
             // Composable function to display the main UI of the home page
             // Function to handle the home page UI layout
             val context = LocalContext.current
-            Spacer(modifier = Modifier.height(35.dp))
+          //  Spacer(modifier = Modifier.height(35.dp))
             // Box with a linear gradient background
             Box(
                 modifier = Modifier
@@ -73,7 +73,46 @@ class HomePage {
                     // verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Spacer(modifier = Modifier.height(100.dp))
+
+                    Box(
+
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier
+                            .size(100.dp)
+                    ) {
+                        Spacer(modifier = Modifier.padding(25.dp))
+                        var isSelected = remember { mutableStateOf(false) }
+                        Card(
+
+                            shape = RoundedCornerShape(15.dp),
+                            elevation = CardDefaults.cardElevation(20.dp),
+                            // border = BorderStroke(3.dp, Color.White),
+                            modifier = Modifier
+                                .clickable {
+                                    navController.navigate("loginpage")
+                                }
+                                .size(100.dp)
+                        ) {
+                            // var isSelected = remember { mutableStateOf(false) }
+                            Image(
+                                painter = painterResource(id = R.drawable.homescreen),
+                                contentDescription = "Card",
+                                modifier = Modifier
+                                    .size(100.dp)
+                                    .clip(RoundedCornerShape(15.dp))
+                                    .background(
+                                        if (isSelected.value) Color.Red.copy(alpha = 0.8f) else Color(
+                                            0xFFFFA500
+                                        ).copy(alpha = 0.8f)
+                                    )
+                                // Set background color to orange
+                            )
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(16.dp)) // Spacer between Image and Textrow
+                    Textrow("Create Seal") // Textrow to display text
+                    Spacer(modifier = Modifier.height(32.dp))
+
                     // Box containing a clickable Card with an Image (Qr Code Scanner)
                     Box(
                         contentAlignment = Alignment.Center,
@@ -91,14 +130,14 @@ class HomePage {
                                     val intent = Intent(context, Qrscann::class.java)
                                     context.startActivity(intent)
                                 }
-                                .size(150.dp)
+                                .size(100.dp)
                         ) {
                             // var isSelected = remember { mutableStateOf(false) }
                             Image(
                                 painter = painterResource(id = R.drawable.homescreen),
                                 contentDescription = "Card",
                                 modifier = Modifier
-                                    .size(150.dp)
+                                    .size(100.dp)
                                     .clip(RoundedCornerShape(15.dp))
                                     .background(
                                         if (isSelected.value) Color.Red.copy(alpha = 0.8f) else Color(
@@ -118,7 +157,7 @@ class HomePage {
                         contentDescription = "",
                         alignment = Alignment.Center, // Corrected parameter name
                         modifier = Modifier
-                            .size(150.dp)
+                            .size(100.dp)
                             .clip(RoundedCornerShape(15.dp))
                             .clickable {
                                 navController.navigate("submit")
